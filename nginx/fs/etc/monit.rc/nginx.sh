@@ -7,7 +7,12 @@ start() {
 }
 
 stop() {
-    kill -QUIT $( cat $PIDFILE )
+    $BINFILE -s stop
+}
+
+restart() {
+    stop
+    start
 }
 
 case "$1" in
@@ -18,10 +23,9 @@ case "$1" in
         stop
         ;;
     restart)
-        stop
-        start
+        restart
         ;;
     *)
-        echo "Usage: {start|stop}" >&2
+        echo "Usage: {start|stop|restart}" >&2
         ;;
 esac

@@ -19,7 +19,7 @@ CMD ["/sbin/monitor.sh"]
 For alpine based containers
 
 ```docker
-FROM nginx-alpine
+FROM nginx:alpine
 COPY --from=netroadshow/monit:alpine . .
 
 # Copy service monitors to /etc/monit.d/* to start services
