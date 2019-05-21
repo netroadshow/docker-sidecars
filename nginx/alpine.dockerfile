@@ -1,6 +1,6 @@
-FROM nginx:1.15 as builder
+FROM nginx:1.15-alpine as builder
 
-COPY --from=netroadshow/monit ./ /pkg/
+COPY --from=netroadshow/monit:alpine ./ /pkg/
 RUN mkdir -p /pkg/usr/sbin /pkg/usr/lib/nginx /pkg/var/log/nginx /pkg/var/cache/nginx && \
     mv -f /etc/nginx /pkg/etc/nginx && \
     mv -f /usr/lib/nginx/modules /pkg/usr/lib/nginx/modules && \

@@ -1,4 +1,0 @@
-set daemon 30
-set log /var/log/monit.log
-
-INCLUDE /etc/monit.d/*
