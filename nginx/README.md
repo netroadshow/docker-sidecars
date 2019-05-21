@@ -9,6 +9,7 @@ In order to use this image, you must:
 
 - Provide a system openssl library to use
 - Provide a user named 'nginx' or alternatively, override the nginx.conf file to have nginx use an alternate user
+- A non-secret SSL/TLS cert is provided at /etc/nginx/ssl/cert.{key|crt} **that should be replaced!**
 
 ## Example
 
