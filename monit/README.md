@@ -3,6 +3,9 @@
 This docker image contains only Monit so that it can be used to create other images.
 This is published to a scratch image so the only things in it are the raw binaries.
 
+In addition to Monit, this image contains [mustache-cli](https://github.com/quantumew/mustache-cli)
+so that startup scripts can dynamically generate configuration files from the environment.
+
 ## Example
 
 For debian based containers

@@ -2,7 +2,7 @@
 build_debian() {
     docker build -t netroadshow/monit monit
     docker build -t netroadshow/nginx-sidecar nginx
-    docker build -t validate test
+    docker build -t validate -f test/validate-debian.dockerfile .
 }
 
 build_alpine() {
@@ -12,11 +12,11 @@ build_alpine() {
 }
 
 run() {
-    docker run -it --rm -p 80:80 -p 443:443 validate
+    docker run -it --rm -p 80:80 -p 443:443 --name validate validate
 }
 
 shell() {
-    docker run -it --rm -p 80:80 -p 443:443 validate $1
+    docker run -it --rm -p 80:80 -p 443:443 --name validate validate $1
 }
 
 case "$1" in
@@ -43,6 +43,6 @@ case "$1" in
         shell /bin/sh
         ;;
     *)
-        echo "Usage: {build|build-alpine|run|run-alpine}" >&2
+        echo "Usage: {build|build-alpine|run|run-alpine|shell|shell-alpine}" >&2
         ;;
 esac
