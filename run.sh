@@ -1,48 +1,61 @@
 #!/bin/bash
-build_debian() {
-    docker build -t netroadshow/monit monit
-    docker build -t netroadshow/nginx-sidecar nginx
-    docker build -t validate -f test/validate-debian.dockerfile .
+MONIT_TAG=":latest"
+NGINX_TAG=":latest"
+ASPNET_COMMAND="docker build -t netroadshow/aspnet aspnet"
+DEMO_PATH="demo/nginx-debian-demo.dockerfile"
+SHELL_COMMAND="/bin/bash"
+
+check() {
+    $1 || { echo "Failed!" >&2 ; exit 1; }
 }
 
-build_alpine() {
-    docker build -t netroadshow/monit:alpine -f monit/alpine.dockerfile monit
-    docker build -t netroadshow/nginx-sidecar:alpine -f nginx/alpine.dockerfile nginx
-    docker build -t validate -f test/validate-alpine.dockerfile .
+build() {
+    check "docker build -t netroadshow/monit${MONIT_TAG} monit"
+    check "docker build -t netroadshow/nginx-sidecar${NGINX_TAG} nginx"
+    check "$ASPNET_COMMAND"
+    check "docker build -t demo -f $DEMO_PATH ."
 }
 
 run() {
-    docker run -it --rm -p 80:80 -p 443:443 --name validate validate
+    exec docker run -it --rm -p 443:443 --name demo demo
 }
 
 shell() {
-    docker run -it --rm -p 80:80 -p 443:443 --name validate validate $1
+    exec docker run -it --rm -p 443:443 --entrypoint "" --name demo demo $1
 }
+
+case "$2" in
+    alpine)
+        MONIT_TAG=":alpine -f monit/alpine.dockerfile"
+        NGINX_TAG=":alpine -f nginx/alpine.dockerfile"
+        ASPNET_COMMAND=""
+        DEMO_PATH="demo/nginx-alpine-demo.dockerfile"
+        SHELL_COMMAND="/bin/sh"
+        ;;
+    aspnet)
+        DEMO_PATH="demo/aspnet-demo.dockerfile"
+        ;;
+    aspnet21)
+        ASPNET_COMMAND="docker build -t netroadshow/aspnet aspnet"
+        ;;
+esac
 
 case "$1" in
     build)
-        build_debian
-        ;;
-    build-alpine)
-        build_alpine
+        build
         ;;
     run)
-        build_debian
-        run
-        ;;
-    run-alpine)
-        build_alpine
+        build
         run
         ;;
     shell)
-        build_debian
-        shell /bin/bash
-        ;;
-    shell-alpine)
-        build_alpine
-        shell /bin/sh
+        build
+        shell $SHELL_COMMAND
         ;;
     *)
-        echo "Usage: {build|build-alpine|run|run-alpine|shell|shell-alpine}" >&2
+        echo "Usage: ./run.sh { build | run | shell } [{ aspnet | alpine }]" >&2
+        exit 1
         ;;
 esac
+
+exit 0

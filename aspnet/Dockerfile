@@ -1,0 +1,12 @@
+ARG SDK_VERSION=2.2
+FROM mcr.microsoft.com/dotnet/core/aspnet:${SDK_VERSION}-stretch-slim
+RUN useradd nginx
+COPY --from=netroadshow/nginx-sidecar / /
+COPY fs/ /
+
+# This is typically the default for ASP.NET Core applications, but a path to a .sock file would work too
+ENV PROXY_URL "http://localhost:5000"
+ENV DOTNET_DLL "Service.dll"
+
+#Start all services
+CMD ["/etc/monit.rc/monit.sh"]

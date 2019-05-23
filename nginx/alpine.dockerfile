@@ -7,5 +7,7 @@ RUN mkdir -p /pkg/usr/sbin /pkg/usr/lib/nginx /pkg/var/log/nginx /pkg/var/cache/
     mv /usr/sbin/nginx /pkg/usr/sbin/nginx
 COPY fs/ /pkg/
 
+EXPOSE 443
+
 FROM scratch
 COPY --from=builder /pkg/ /
