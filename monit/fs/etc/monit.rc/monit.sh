@@ -2,6 +2,10 @@
 PIDFILE=/var/run/monit.pid
 BINFILE=/usr/bin/monit
 
+# Send logs that go to /var/log/out directly to stdout
+ln -s /proc/1/fd/1 /var/log/out
+ln -s /proc/1/fd/2 /var/log/err
+
 # Monit will start all apps and monitor them
 $BINFILE -c /etc/monitrc
 
@@ -22,7 +26,8 @@ PID=$(cat $PIDFILE)
 trap "kill $PID ; exit" EXIT
 
 # Stay up and pipe logs to stdout, if monit dies though we need to exit so that docker can restart the container
-tail -F /var/log/out &
 while kill -0 $PID 2> /dev/null; do
-   sleep 1
+   sleep 5
 done
+
+exit 1

@@ -2,6 +2,7 @@
 MONIT_TAG=":latest"
 NGINX_TAG=":latest"
 ASPNET_COMMAND="docker build -t netroadshow/aspnet aspnet"
+DEMO_DIR="demo"
 DEMO_PATH="demo/nginx-debian-demo.dockerfile"
 SHELL_COMMAND="/bin/bash"
 
@@ -13,7 +14,7 @@ build() {
     check "docker build -t netroadshow/monit${MONIT_TAG} monit"
     check "docker build -t netroadshow/nginx-sidecar${NGINX_TAG} nginx"
     check "$ASPNET_COMMAND"
-    check "docker build -t demo -f $DEMO_PATH ."
+    check "docker build -t demo -f $DEMO_PATH $DEMO_DIR"
 }
 
 run() {
@@ -30,6 +31,14 @@ case "$2" in
         NGINX_TAG=":alpine -f nginx/alpine.dockerfile"
         ASPNET_COMMAND=""
         DEMO_PATH="demo/nginx-alpine-demo.dockerfile"
+        SHELL_COMMAND="/bin/sh"
+        ;;
+    jetty)
+        MONIT_TAG=":alpine -f monit/alpine.dockerfile"
+        NGINX_TAG=":alpine -f nginx/alpine.dockerfile"
+        ASPNET_COMMAND=""
+        DEMO_DIR="jetty"
+        DEMO_PATH="jetty/Dockerfile"
         SHELL_COMMAND="/bin/sh"
         ;;
     aspnet)

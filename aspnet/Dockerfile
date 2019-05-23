@@ -8,5 +8,7 @@ COPY fs/ /
 ENV PROXY_URL "http://localhost:5000"
 ENV DOTNET_DLL "Service.dll"
 
+EXPOSE 443
+
 #Start all services
 CMD ["/etc/monit.rc/monit.sh"]

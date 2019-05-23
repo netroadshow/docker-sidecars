@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -yy wget && \
     rm -rf monit-${MONIT_VER}/ monit-${MONIT_VER}-linux-x64.tar.gz
 
 ADD fs/ /pkg/
+RUN chmod 600 /etc/monitrc
 
 FROM scratch
 COPY --from=builder /pkg /
