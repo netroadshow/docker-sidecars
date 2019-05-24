@@ -1,17 +1,17 @@
 #!/bin/sh
-DOTNET=/usr/bin/dotnet
 TEMPLATEBIN=/usr/bin/mustache
-APPROOT=/app/
-DLLNAME=${DOTNET_DLL:-Service.dll}
-LOGFILE=/var/log/dotnet.log
-ERRLOGFILE=/var/log/dotnet.err.log
-PIDFILE=/var/run/dotnet.pid
-PID=$(cat $PIDFILE)
+BINFILE=/bin/fluent-bit
+CONFFILE=/etc/fluent/fluent-bit.conf
+USER=fluent
+STARTCMD="$BINFILE -c $CONFFILE"
+LOGFILE=/proc/1/fd/1
+ERRLOGFILE=/proc/1/fd/2
+PIDFILE=/var/run/fluent.pid
+PID=$(cat $PIDFILE 2>> /dev/null)
 
 start() {
     (
-        cd $APPROOT
-        $DOTNET "$DLLNAME" >> $LOGFILE 2>> $ERRLOGFILE &
+        $STARTCMD >> $LOGFILE 2>> $ERRLOGFILE &
         echo "$!" > $PIDFILE
     )
 }

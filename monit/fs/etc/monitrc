@@ -1,4 +1,4 @@
 set daemon 5
-set log /var/log/out
+set log /var/log/monit.log
 
 INCLUDE /etc/monit.d/*

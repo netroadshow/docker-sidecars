@@ -2,10 +2,6 @@
 PIDFILE=/var/run/monit.pid
 BINFILE=/usr/bin/monit
 
-# Send logs that go to /var/log/out directly to stdout
-ln -s /proc/1/fd/1 /var/log/out
-ln -s /proc/1/fd/2 /var/log/err
-
 # Monit will start all apps and monitor them
 $BINFILE -c /etc/monitrc
 
