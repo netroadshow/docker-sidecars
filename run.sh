@@ -28,28 +28,17 @@ shell() {
 }
 
 case "$2" in
-    alpine)
-        MONIT_TAG=":alpine -f monit/alpine.dockerfile"
-        NGINX_TAG=":alpine -f nginx/alpine.dockerfile"
-        ASPNET_COMMAND=""
-        FLUENT_COMMAND=""
-        DEMO_PATH="demo/nginx-alpine-demo.dockerfile"
-        SHELL_COMMAND="/bin/sh"
-        ;;
     jetty)
-        MONIT_TAG=":alpine -f monit/alpine.dockerfile"
-        NGINX_TAG=":alpine -f nginx/alpine.dockerfile"
-        ASPNET_COMMAND=""
-        FLUENT_COMMAND=""
         DEMO_DIR="jetty"
         DEMO_PATH="jetty/Dockerfile"
-        SHELL_COMMAND="/bin/sh"
+        SHELL_COMMAND="/bin/bash"
         ;;
     aspnet)
         DEMO_PATH="demo/aspnet-demo.dockerfile"
         ;;
     aspnet21)
-        ASPNET_COMMAND="docker build -t netroadshow/aspnet aspnet"
+        ASPNET_COMMAND="docker build -t netroadshow/aspnet --build-arg SDK_VERSION=2.1 aspnet"
+        DEMO_PATH="demo/aspnet-demo.dockerfile --build-arg SDK_VERSION=2.1"
         ;;
 esac
 

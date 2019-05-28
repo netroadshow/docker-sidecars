@@ -2,3 +2,4 @@
 PROXY_URL: "http://127.0.0.1:5000"
 SSL_CERT: "/etc/nginx/ssl/cert.crt"
 SSL_KEY: "/etc/nginx/ssl/cert.key"
+ALLOW_HTTP: false
