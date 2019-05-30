@@ -4,10 +4,13 @@ START_JETTY="su jetty -s /bin/bash -c $JAVA_CMD"
 LOGFILE=/var/log/jetty.log
 PIDFILE=/var/run/jetty.pid
 SOCKFILE=/tmp/jetty.sock
+SYSLOGSOCKFILE=/tmp/syslog.sock
 JETTY_ROOT=/var/lib/jetty
 PID=$(cat $PIDFILE)
 
 start() {
+    count=0
+    until chmod 777 $SYSLOGSOCKFILE || (( count++ >= 60 )); do sleep 0.5; done
     (
         cd $JETTY_ROOT
         $START_JETTY >> $LOGFILE 2>> $LOGFILE &

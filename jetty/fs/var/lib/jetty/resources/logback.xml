@@ -1,0 +1,14 @@
+<configuration>
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+  <!-- org.graylog2.syslog4j.impl.unix.socket.UnixSocketSyslogConfig -->
+  <appender name="console" class="org.graylog2.syslog4j.impl.unix.socket.UnixSocketSyslogConfig">
+    <path>/tmp/syslog.sock</path>
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="console" />
+  </root>
+</configuration>
