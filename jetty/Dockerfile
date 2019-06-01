@@ -6,11 +6,11 @@ RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.8:copy-dependencies
 #Build the managed container
 FROM jetty:9.4-jre8
 USER root
-RUN java -jar /usr/local/jetty/start.jar --add-to-start=unixsocket,unixsocket-forwarded,logging-logback --approve-all-licenses && \
+RUN java -jar /usr/local/jetty/start.jar --add-to-start=unixsocket,unixsocket-forwarded,logging-log4j2 --approve-all-licenses && \
     useradd nginx -G jetty
 COPY --from=netroadshow/nginx-sidecar / /
 COPY --from=netroadshow/fluent / /
-COPY --from=deps /target/ /var/lib/jetty/lib/ext/
+COPY --from=deps /target/dependency/ /var/lib/jetty/lib/ext/
 COPY fs/etc/ /etc/
 COPY --chown=jetty:jetty fs/var/lib/jetty/ /var/lib/jetty/
 
