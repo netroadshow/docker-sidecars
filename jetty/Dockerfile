@@ -7,7 +7,8 @@ RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.8:copy-dependencies
 FROM jetty:9.4-jre8
 USER root
 RUN java -jar /usr/local/jetty/start.jar --add-to-start=unixsocket,unixsocket-forwarded,logging-log4j2 --approve-all-licenses && \
-    useradd nginx -G jetty
+    useradd nginx -G jetty && \
+    touch /var/log/jetty.log
 COPY --from=netroadshow/nginx-sidecar / /
 COPY --from=netroadshow/fluent / /
 COPY --from=deps /target/dependency/ /var/lib/jetty/lib/ext/
@@ -17,4 +18,4 @@ COPY --chown=jetty:jetty fs/var/lib/jetty/ /var/lib/jetty/
 ENV PROXY_URL "unix:/tmp/jetty.sock"
 EXPOSE 443
 ENTRYPOINT []
-CMD ["/etc/monit.rc/monit.sh"]
+CMD ["/etc/start.d/monit.sh"]

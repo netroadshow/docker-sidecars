@@ -1,7 +1,7 @@
 #!/bin/bash
 MONIT_TAG=":latest"
 NGINX_TAG=":latest"
-ASPNET_COMMAND="docker build -t netroadshow/aspnet aspnet"
+ASPNET_COMMAND="docker build -t netroadshow/aspnet -f aspnet/aspnet22.dockerfile aspnet"
 FLUENT_COMMAND="docker build -t netroadshow/fluent fluent"
 DEMO_DIR="demo"
 DEMO_PATH="demo/nginx-debian-demo.dockerfile"
@@ -31,14 +31,13 @@ case "$2" in
     jetty)
         DEMO_DIR="jetty"
         DEMO_PATH="jetty/Dockerfile"
-        SHELL_COMMAND="/bin/bash"
         ;;
     aspnet)
         DEMO_PATH="demo/aspnet-demo.dockerfile"
         ;;
     aspnet21)
-        ASPNET_COMMAND="docker build -t netroadshow/aspnet --build-arg SDK_VERSION=2.1 aspnet"
-        DEMO_PATH="demo/aspnet-demo.dockerfile --build-arg SDK_VERSION=2.1"
+        ASPNET_COMMAND="docker build -t netroadshow/aspnet -f aspnet/aspnet21.dockerfile aspnet"
+        DEMO_PATH="demo/aspnet-demo.dockerfile"
         ;;
 esac
 

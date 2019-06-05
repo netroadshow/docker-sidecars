@@ -1,6 +1,6 @@
-ARG SDK_VERSION=2.2
-FROM mcr.microsoft.com/dotnet/core/aspnet:${SDK_VERSION}-stretch-slim
-RUN useradd nginx
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim
+RUN useradd nginx && \
+    touch /var/log/dotnet.log
 COPY --from=netroadshow/nginx-sidecar / /
 COPY fs/ /
 
@@ -11,4 +11,4 @@ ENV DOTNET_DLL "Service.dll"
 EXPOSE 443
 
 #Start all services
-CMD ["/etc/monit.rc/monit.sh"]
+CMD ["/etc/start.d/monit.sh"]

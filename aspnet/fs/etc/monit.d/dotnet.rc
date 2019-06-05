@@ -1,3 +1,3 @@
 check process dotnet with pidfile /var/run/dotnet.pid
-  start program = "/etc/monit.rc/dotnet.sh start"
-  stop program = "/etc/monit.rc/dotnet.sh stop"
+  start program = "/etc/start.d/dotnet.sh start"
+  stop program = "/etc/start.d/dotnet.sh stop"

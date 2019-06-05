@@ -4,14 +4,13 @@ TEMPLATEBIN=/usr/bin/mustache
 APPROOT=/app/
 DLLNAME=${DOTNET_DLL:-Service.dll}
 LOGFILE=/var/log/dotnet.log
-ERRLOGFILE=/var/log/dotnet.err.log
 PIDFILE=/var/run/dotnet.pid
 PID=$(cat $PIDFILE)
 
 start() {
     (
         cd $APPROOT
-        $DOTNET "$DLLNAME" >> $LOGFILE 2>> $ERRLOGFILE &
+        $DOTNET "$DLLNAME" >> $LOGFILE 2>> $LOGFILE &
         echo "$!" > $PIDFILE
     )
 }

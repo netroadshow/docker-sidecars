@@ -1,3 +1,3 @@
 check process fluent with pidfile /var/run/fluent.pid
-  start program = "/etc/monit.rc/fluent.sh start"
-  stop program = "/etc/monit.rc/fluent.sh stop"
+  start program = "/etc/start.d/fluent.sh start"
+  stop program = "/etc/start.d/fluent.sh stop"

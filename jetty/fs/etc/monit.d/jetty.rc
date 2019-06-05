@@ -1,4 +1,4 @@
 check process jetty with pidfile /var/run/jetty.pid
   depends on fluent
-  start program = "/etc/monit.rc/jetty.sh start"
-  stop program = "/etc/monit.rc/jetty.sh stop"
+  start program = "/etc/start.d/jetty.sh start"
+  stop program = "/etc/start.d/jetty.sh stop"
