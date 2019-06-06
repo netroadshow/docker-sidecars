@@ -1,6 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim
-RUN useradd nginx && \
-    touch /var/log/dotnet.log
+RUN useradd nginx
 COPY --from=netroadshow/nginx-sidecar / /
 COPY fs/ /
 

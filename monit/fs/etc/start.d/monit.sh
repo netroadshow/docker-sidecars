@@ -21,7 +21,7 @@ PID=$(cat $PIDFILE)
 # Catch signals
 trap "kill $PID ; exit" EXIT
 
-# Stay up and pipe logs to stdout, if monit dies though we need to exit so that docker can restart the container
+# Stay awake unless monit dies
 while kill -0 $PID 2> /dev/null; do
    sleep 5
 done

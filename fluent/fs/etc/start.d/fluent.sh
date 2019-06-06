@@ -4,14 +4,13 @@ BINFILE=/bin/fluent-bit
 CONFFILE=/etc/fluent/fluent-bit.conf
 USER=fluent
 STARTCMD="$BINFILE -c $CONFFILE"
-LOGFILE=/proc/1/fd/1
-ERRLOGFILE=/proc/1/fd/2
+LOGFILE=/dev/null
 PIDFILE=/var/run/fluent.pid
 PID=$(cat $PIDFILE 2>> /dev/null)
 
 start() {
     (
-        $STARTCMD >> $LOGFILE 2>> $ERRLOGFILE &
+        $STARTCMD >> $LOGFILE 2>> $LOGFILE &
         echo "$!" > $PIDFILE
     )
 }
