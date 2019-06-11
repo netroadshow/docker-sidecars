@@ -20,11 +20,11 @@ build() {
 }
 
 run() {
-    exec docker run -it --rm -p 443:443 --name demo demo
+    exec docker run -it --rm -p 443:443 -p 80:80 -name demo demo
 }
 
 shell() {
-    exec docker run -it --rm -p 443:443 --entrypoint "" --name demo demo $1
+    exec docker run -it --rm -p 443:443 -p 80:80 --entrypoint "" --name demo demo $1
 }
 
 case "$2" in
