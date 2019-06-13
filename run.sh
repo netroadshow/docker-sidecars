@@ -20,7 +20,7 @@ build() {
 }
 
 run() {
-    exec docker run -it --rm -p 443:443 -p 80:80 -name demo demo
+    exec docker run -it --rm -p 443:443 -p 80:80 --name demo demo
 }
 
 shell() {

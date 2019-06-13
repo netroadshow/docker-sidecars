@@ -1,0 +1,3 @@
+ check file jettysock with path /tmp/jetty.sock
+    if failed permission 0777 then exec "/bin/chmod 777 /tmp/jetty.sock"
+    depends on jetty

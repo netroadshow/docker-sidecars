@@ -13,8 +13,6 @@ start() {
         $START_JETTY >> $LOGFILE 2>> $LOGFILE &
         echo "$!" > $PIDFILE
     )
-    count=0
-    until chmod 770 $SOCKFILE || (( count++ >= 60 )); do sleep 0.5; done
 }
 
 stop() {
