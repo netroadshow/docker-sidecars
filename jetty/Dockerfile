@@ -16,7 +16,7 @@ COPY --from=deps /target/dependency/ /var/lib/jetty/lib/ext/
 COPY fs/etc/ /etc/
 COPY --chown=jetty:jetty fs/var/lib/jetty/ /var/lib/jetty/
 
-ENV PROXY_URL "localhost:8080"
-EXPOSE 443 80 8080
+ENV PROXY_URL "localhost:8086"
+EXPOSE 443
 ENTRYPOINT []
 CMD ["/etc/start.d/monit.sh"]
